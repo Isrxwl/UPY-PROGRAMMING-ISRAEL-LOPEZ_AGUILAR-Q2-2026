@@ -1,0 +1,99 @@
+# INPUT
+Print "Select a function to integrate (1: Polynomial, 2: Sine, 3: Exponential):"
+Read function_choice
+
+Print "Enter the start of the interval (a):"
+Read a
+Print "Enter the end of the interval (b):"
+Read b
+
+Print "Select a mode: 1 (Default), 2 (Custom), 3 (Auto-adjust)"
+Read mode_choice
+
+# PROCESS
+# Step 1: Calculate the exact analytical value for error comparison
+If function_choice equals 1:
+    exact_value <- exact area formula for Polynomial from a to b
+If function_choice equals 2:
+    exact_value <- exact area formula for Sine from a to b
+If function_choice equals 3:
+    exact_value <- exact area formula for Exponential from a to b
+
+# Step 2: Configure parameters based on the selected mode
+If mode_choice equals 1:
+    n <- 100
+    method <- "Midpoint"
+    target_error <- 0
+    auto_adjust <- False
+
+If mode_choice equals 2:
+    Print "Enter the number of subintervals (n):"
+    Read n
+    Print "Select a method (1: Left, 2: Right, 3: Midpoint, 4: Trapezoid):"
+    Read method
+    target_error <- 0
+    auto_adjust <- False
+
+If mode_choice equals 3:
+    Print "Enter the target relative error threshold (%):"
+    Read target_error
+    n <- 10
+    method <- "Midpoint" 
+    auto_adjust <- True
+
+# Step 3: Integration Loop (with auto-adjust convergence if needed)
+loop_active <- True
+
+While loop_active equals True:
+    h <- (b - a) / n
+    numerical_result <- 0
+    sum_value <- 0
+    
+    # Calculate numerical integration based on the chosen method
+    If method equals "Left":
+        For i from 0 to n - 1:
+            x_i <- a + (i * h)
+            sum_value <- sum_value + EvaluateFunction(function_choice, x_i)
+        numerical_result <- h * sum_value
+        
+    If method equals "Right":
+        For i from 1 to n:
+            x_i <- a + (i * h)
+            sum_value <- sum_value + EvaluateFunction(function_choice, x_i)
+        numerical_result <- h * sum_value
+        
+    If method equals "Midpoint":
+        For i from 0 to n - 1:
+            x_i <- a + (i * h) + (h / 2)
+            sum_value <- sum_value + EvaluateFunction(function_choice, x_i)
+        numerical_result <- h * sum_value
+        
+    If method equals "Trapezoid":
+        For i from 1 to n - 1:
+            x_i <- a + (i * h)
+            sum_value <- sum_value + EvaluateFunction(function_choice, x_i)
+        # Add the edges
+        sum_value <- sum_value * 2
+        sum_value <- sum_value + EvaluateFunction(function_choice, a)
+        sum_value <- sum_value + EvaluateFunction(function_choice, b)
+        numerical_result <- (h / 2) * sum_value
+
+    # Step 4: Error Analysis
+    absolute_error <- AbsoluteValue(exact_value - numerical_result)
+    relative_error <- (absolute_error / AbsoluteValue(exact_value)) * 100
+    
+    # Step 5: Check Auto-adjust condition
+    If auto_adjust equals True:
+        If relative_error <= target_error:
+            loop_active <- False
+        Else:
+            n <- n * 2
+    Else:
+        loop_active <- False
+
+# OUTPUT
+Print "The numerical integral is: ", numerical_result
+Print "The exact integral is: ", exact_value
+Print "Absolute Error: ", absolute_error
+Print "Relative Error (%): ", relative_error
+Print "Number of iterations (n) used: ", n
