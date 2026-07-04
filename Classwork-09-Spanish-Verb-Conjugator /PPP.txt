@@ -1,1 +1,21 @@
+# INPUT
+Display "Ingrese verbo: "
+verb <- user input
 
+# PROCESS
+pronouns <- list containing "yo", "tu", "el", "nosotros", "vosotros", "ellos"
+
+# Dictionary mapped by verb ending
+endings_dict <- map "ar" to ["o", "as", "a", "amos", "ais", "an"], "er" to ["o", "es", "e", "emos", "eis", "en"], "ir" to ["o", "es", "e", "imos", "is", "en"]
+
+stem <- verb excluding the last two letters
+verb_ending <- last two letters of verb
+matching_endings <- endings_dict mapped to verb_ending
+
+# OUTPUT
+index <- 0
+Loop while index is less than 6:
+    current_pronoun <- pronouns at index
+    current_ending <- matching_endings at index
+    Display current_pronoun + " " + stem + current_ending
+    index <- index + 1
