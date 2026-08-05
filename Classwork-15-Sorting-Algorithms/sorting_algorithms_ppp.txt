@@ -1,0 +1,46 @@
+=========================================================
+PSEUDOCODE PROGRAMMING PROCESS (PPP)
+Classwork 15 - Sorting Algorithms
+=========================================================
+
+---------------------------------------------------------
+1. BUBBLE SORT
+---------------------------------------------------------
+INPUT: An unsorted array of numbers.
+PROCESS:
+FOR each pass:
+    FOR each pair of neighbors (left, right) not yet finalized:
+        IF left > right:
+            swap(left, right)
+OUTPUT: The array sorted in ascending order.
+
+---------------------------------------------------------
+2. SELECTION SORT
+---------------------------------------------------------
+INPUT: An unsorted array of numbers.
+PROCESS:
+FOR each index 'i' from the beginning to the end of the array:
+    SET min_index = i
+    
+    FOR each index 'j' from i + 1 to the end of the array:
+        IF element at j < element at min_index:
+            SET min_index = j
+            
+    SWAP element at i with element at min_index
+OUTPUT: The array sorted in ascending order.
+
+---------------------------------------------------------
+3. INSERTION SORT
+---------------------------------------------------------
+INPUT: An unsorted array of numbers.
+PROCESS:
+FOR each index 'i' from 1 to the end of the array (starting at the second element):
+    SET current_value = element at i
+    SET pos = i
+    
+    WHILE pos > 0 AND element at (pos - 1) > current_value:
+        SET element at pos = element at (pos - 1)
+        DECREMENT pos by 1
+        
+    SET element at pos = current_value
+OUTPUT: The array sorted in ascending order.
