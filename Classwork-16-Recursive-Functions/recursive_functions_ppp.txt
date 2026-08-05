@@ -1,0 +1,151 @@
+======================================================
+PSEUDOCODE PROGRAMMING PROCESS (PPP)
+Classwork 16 - Recursive Functions
+======================================================
+
+1. Función: recursiva(n)
+INICIO
+    INTENTAR:
+        SI 'n' no es un entero o es menor a 0:
+            LANZAR error de valor o tipo
+            
+        SI 'n' es igual a 0 (Caso Base):
+            RETORNAR "Done!"
+        SINO (Caso Recursivo):
+            IMPRIMIR 'n'
+            RETORNAR llamada a recursiva(n - 1)
+    ATRAPAR ERRORES:
+        RETORNAR mensaje descriptivo del error
+FIN
+
+------------------------------------------------------
+2. Función: fibonacci(n)
+INICIO
+    INTENTAR:
+        SI 'n' no es un entero o es menor a 0:
+            LANZAR error de valor o tipo
+            
+        SI 'n' es igual a 0 O 'n' es igual a 1 (Caso Base):
+            RETORNAR 'n'
+        SINO (Caso Recursivo):
+            RETORNAR llamada a fibonacci(n - 1) + fibonacci(n - 2)
+    ATRAPAR ERRORES:
+        RETORNAR mensaje descriptivo del error
+FIN
+
+------------------------------------------------------
+3. Función: factorial(n)
+INICIO
+    INTENTAR:
+        SI 'n' no es un entero o es menor a 0:
+            LANZAR error de valor o tipo
+            
+        SI 'n' es igual a 0 O 'n' es igual a 1 (Caso Base):
+            RETORNAR 1
+        SINO (Caso Recursivo):
+            RETORNAR llamada a factorial(n - 1) * n
+    ATRAPAR ERRORES:
+        RETORNAR mensaje descriptivo del error
+FIN
+
+------------------------------------------------------
+4. Función: multiplicacion_recursiva(n, m)
+INICIO
+    INTENTAR:
+        SI 'm' no es un entero o es menor a 0:
+            LANZAR error indicando que el multiplicador es inválido
+            
+        SI 'm' es igual a 0 (Caso Base):
+            RETORNAR 0
+        SINO (Caso Recursivo):
+            RETORNAR llamada a multiplicacion_recursiva(n, m - 1) + n
+    ATRAPAR ERRORES:
+        RETORNAR mensaje descriptivo del error
+FIN
+
+------------------------------------------------------
+5. Función: division_entera_recursiva(dividendo, divisor)
+INICIO
+    INTENTAR:
+        SI 'divisor' es igual a 0:
+            LANZAR error de división entre cero
+        SI 'dividendo' o 'divisor' no son enteros o son menores a 0:
+            LANZAR error de valor
+            
+        SI (dividendo - divisor) es menor a 0 (Caso Base):
+            RETORNAR 0
+        SINO (Caso Recursivo):
+            RETORNAR llamada a division_entera_recursiva(dividendo - divisor, divisor) + 1
+    ATRAPAR ERRORES:
+        RETORNAR mensaje descriptivo del error
+FIN
+
+------------------------------------------------------
+6. Función: potencia_recursiva(base, exponente)
+INICIO
+    INTENTAR:
+        SI 'exponente' no es un entero o es menor a 0:
+            LANZAR error de valor
+            
+        SI 'exponente' es igual a 0 (Caso Base):
+            RETORNAR 1
+        SINO (Caso Recursivo):
+            RETORNAR llamada a potencia_recursiva(base, exponente - 1) * base
+    ATRAPAR ERRORES:
+        RETORNAR mensaje descriptivo del error
+FIN
+
+------------------------------------------------------
+7. Función: serie_collatz(n)
+INICIO
+    INTENTAR:
+        SI 'n' no es un entero o es menor o igual a 0:
+            LANZAR error de valor (debe ser estrictamente positivo)
+            
+        SI 'n' es igual a 1 (Caso Base):
+            IMPRIMIR "END!"
+            RETORNAR 0
+        SINO (Caso Recursivo):
+            SI 'n' es divisible entre 2 (par):
+                IMPRIMIR n / 2
+                RETORNAR llamada a serie_collatz(n / 2)
+            SINO (impar):
+                IMPRIMIR (3 * n) + 1
+                RETORNAR llamada a serie_collatz((3 * n) + 1)
+    ATRAPAR ERRORES:
+        RETORNAR mensaje descriptivo del error
+FIN
+
+------------------------------------------------------
+8. Función: aplanar_json(diccionario, clave_padre, separador)
+INICIO
+    CREAR lista vacía llamada 'elementos'
+    
+    INTENTAR:
+        PARA CADA 'llave' y 'valor' en el 'diccionario':
+            SI 'clave_padre' no está vacía:
+                nueva_llave = clave_padre + separador + llave
+            SINO:
+                nueva_llave = llave
+                
+            SI 'valor' es un DICCIONARIO:
+                resultado_anidado = LLAMAR aplanar_json(valor, nueva_llave, separador)
+                AGREGAR items de resultado_anidado a 'elementos'
+                
+            SINO, SI 'valor' es una LISTA:
+                PARA CADA 'indice' e 'item' en la lista:
+                    llave_lista = nueva_llave + separador + indice
+                    SI 'item' es un DICCIONARIO:
+                        res_lista = LLAMAR aplanar_json(item, llave_lista, separador)
+                        AGREGAR items de res_lista a 'elementos'
+                    SINO:
+                        AGREGAR (llave_lista, item) a 'elementos'
+                        
+            SINO (es un valor plano):
+                AGREGAR (nueva_llave, valor) a 'elementos'
+                
+        RETORNAR 'elementos' convertido a formato diccionario
+        
+    ATRAPAR ERRORES (ej. si el input no tiene el método .items()):
+        RETORNAR mensaje indicando que el input debe ser un diccionario
+FIN
