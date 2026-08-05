@@ -1,0 +1,61 @@
+=========================================================
+PPP (Pseudocode Programming Process) - Galaxy Voyage Part 1
+=========================================================
+
+1. CONFIGURACIÓN E INICIALIZACIÓN
+---------------------------------------------------------
+Abrir el archivo 'config.txt' en modo lectura
+Por cada línea dentro del archivo:
+    Separar la línea por el signo '=' para obtener el parámetro y su valor
+    Si el valor contiene una coma (,):
+        Convertirlo en una tupla de números enteros (ej. colores RGB)
+    Si el valor contiene un punto (.):
+        Convertirlo en un número decimal (float)
+    Si no cumple ninguna de las anteriores:
+        Convertirlo en un número entero (int)
+    Guardar el parámetro y su valor convertido en un diccionario de configuración
+
+Inicializar el motor de Pygame
+Crear la ventana del juego usando el ancho (width) y alto (height) del diccionario de configuración
+
+
+2. FUNCIONES PRINCIPALES
+---------------------------------------------------------
+FUNCIÓN calculate_x_positions(superficie, cantidad_lineas, espacio_porcentaje):
+    Crear una lista vacía llamada 'posiciones_x'
+    Obtener el ancho total de la superficie de la pantalla
+    Calcular el espacio en píxeles multiplicando el ancho por el 'espacio_porcentaje'
+    Encontrar el centro de la pantalla (ancho / 2)
+    Calcular un 'desplazamiento' inicial negativo dividiendo la cantidad_lineas entre 2
+    
+    Repetir un número de veces igual a 'cantidad_lineas':
+        Calcular la coordenada X actual = centro de pantalla + (desplazamiento * espacio en píxeles)
+        Agregar la coordenada X calculada a la lista 'posiciones_x'
+        Sumar 1 al desplazamiento
+        
+    Devolver la lista completa de 'posiciones_x'
+
+FUNCIÓN draw_vertical_lines(superficie, posiciones_x, color, grosor):
+    Obtener la altura total de la superficie de la pantalla
+    Por cada valor 'x' dentro de la lista 'posiciones_x':
+        Dibujar una línea recta en la superficie desde el punto de inicio (x, 0) hasta el punto final (x, altura) usando el color y grosor definidos
+
+
+3. CICLO PRINCIPAL (MAIN LOOP)
+---------------------------------------------------------
+Ejecutar 'calculate_x_positions' pasándole la pantalla, el número de líneas y la separación configurada
+Guardar el resultado en la variable 'x_positions'
+Imprimir 'x_positions' en la consola para verificar que los cálculos matemáticos sean correctos
+
+Definir la variable 'corriendo' como Verdadero (True)
+
+MIENTRAS 'corriendo' sea Verdadero:
+    Obtener todos los eventos registrados por el usuario
+    Si el tipo de evento es SALIR (el usuario cierra la ventana):
+        Cambiar la variable 'corriendo' a Falso (False)
+        
+    Rellenar el fondo de la pantalla con el color de fondo definido en la configuración
+    Ejecutar 'draw_vertical_lines' pasándole la pantalla, la lista 'x_positions' y el color de línea
+    Actualizar la pantalla para mostrar los gráficos recién dibujados
+
+Cerrar Pygame y terminar el programa
