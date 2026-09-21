@@ -1,0 +1,133 @@
+# --- CLASES DE ESTRUCTURAS DE DATOS ---
+
+class EmergencyRequest:
+    def __init__(self, req_id, citizen, emp_type, priority):
+        self.req_id = req_id
+        self.citizen = citizen
+        self.emp_type = emp_type
+        self.priority = priority
+
+    def __str__(self):
+        return f"Request: {self.req_id} Citizen: {self.citizen} Emergency: {self.emp_type} Priority: {self.priority}"
+
+
+class EmergencyQueue:
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def enqueue(self, emergency):
+        # Manejo de prioridad Alta (Challenge)
+        if emergency.priority == "High":
+            insert_index = 0
+            for item in self.items:
+                if item.priority == "High":
+                    insert_index += 1
+                else:
+                    break
+            self.items.insert(insert_index, emergency)
+        else:
+            self.items.append(emergency)
+
+    def dequeue(self):
+        if self.is_empty():
+            return None
+        return self.items.pop(0)
+
+    def display_pending(self):
+        if self.is_empty():
+            print("No pending emergencies.")
+        else:
+            for item in self.items:
+                print(item)
+
+
+class HistoryStack:
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def push(self, emergency):
+        self.items.append(emergency)
+
+    def peek_recent(self):
+        if self.is_empty():
+            return None
+        return self.items[-1]
+
+    def display_history(self):
+        if self.is_empty():
+            print("No history available.")
+        else:
+            for item in reversed(self.items):
+                print(item)
+
+
+# --- LÓGICA DEL MENÚ INTERACTIVO ---
+
+def main():
+    pending_queue = EmergencyQueue()
+    history_stack = HistoryStack()
+
+    while True:
+        print("\n" + "="*40)
+        print("  EMERGENCY SERVICE MANAGEMENT SYSTEM")
+        print("="*40)
+        print("1. Register emergency")
+        print("2. Display pending emergencies")
+        print("3. Attend emergency")
+        print("4. Display attended emergencies")
+        print("5. Review most recent action")
+        print("6. Exit")
+        print("-" * 40)
+        
+        choice = input("Select an option: ")
+
+        if choice == '1':
+            print("\n--- Registering New Emergency ---")
+            req_id = input("ID: ")
+            citizen = input("Citizen: ")
+            emp_type = input("Emergency (Medical/Fire/Accident): ")
+            priority = input("Priority (High/Medium/Low): ")
+            
+            new_emergency = EmergencyRequest(req_id, citizen, emp_type, priority)
+            pending_queue.enqueue(new_emergency)
+            print(f">>> Emergency {req_id} registered successfully.")
+
+        elif choice == '2':
+            print("\n--- Pending Emergencies ---")
+            pending_queue.display_pending()
+
+        elif choice == '3':
+            if pending_queue.is_empty():
+                print("\n>>> No pending emergencies to attend.")
+            else:
+                attended = pending_queue.dequeue()
+                history_stack.push(attended)
+                print(f"\n>>> Now attending: {attended}")
+
+        elif choice == '4':
+            print("\n--- Attended Emergencies History ---")
+            history_stack.display_history()
+
+        elif choice == '5':
+            recent = history_stack.peek_recent()
+            if recent:
+                print(f"\n>>> Most recent action: {recent}")
+            else:
+                print("\n>>> No history available yet.")
+
+        elif choice == '6':
+            print("\nExiting system...")
+            break
+
+        else:
+            print("\n>>> Invalid option. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
